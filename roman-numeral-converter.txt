@@ -1,0 +1,63 @@
+function convertToRoman(num) {
+    let numDigits = num.toString().split('').reverse();
+    console.log(numDigits);
+    let romanStr = "";
+    let digits = numDigits[0] == 1 ? romanStr.concat("I")
+                 : numDigits[0] == 2 ? romanStr.concat("II")
+                 : numDigits[0] == 3 ? romanStr.concat("III")
+                 : numDigits[0] == 4 ? romanStr.concat("IV")
+                 : numDigits[0] == 5 ? romanStr.concat("V")
+                 : numDigits[0] == 6 ? romanStr.concat("VI")
+                 : numDigits[0] == 7 ? romanStr.concat("VII")
+                 : numDigits[0] == 8 ? romanStr.concat("VIII")
+                 : numDigits[0] == 9 ? romanStr.concat("IX")
+                 : romanStr;
+    console.log(digits);
+    let tensDigits = numDigits[1] == 1 ? romanStr.concat("X")
+                 : numDigits[1] == 2 ? romanStr.concat("XX")
+                 : numDigits[1] == 3 ? romanStr.concat("XXX")
+                 : numDigits[1] == 4 ? romanStr.concat("XL")
+                 : numDigits[1] == 5 ? romanStr.concat("L")
+                 : numDigits[1] == 6 ? romanStr.concat("LX")
+                 : numDigits[1] == 7 ? romanStr.concat("LXX")
+                 : numDigits[1] == 8 ? romanStr.concat("LXXX")
+                 : numDigits[1] == 9 ? romanStr.concat("XC")
+                 : romanStr;
+    console.log(tensDigits);
+    let hundredsDigits = numDigits[2] == 1 ? romanStr.concat("C")
+                 : numDigits[2] == 2 ? romanStr.concat("CC")
+                 : numDigits[2] == 3 ? romanStr.concat("CCC")
+                 : numDigits[2] == 4 ? romanStr.concat("CD")
+                 : numDigits[2] == 5 ? romanStr.concat("D")
+                 : numDigits[2] == 6 ? romanStr.concat("DC")
+                 : numDigits[2] == 7 ? romanStr.concat("DCC")
+                 : numDigits[2] == 8 ? romanStr.concat("DCCC")
+                 : numDigits[2] == 9 ? romanStr.concat("CM")
+                 : romanStr;
+    console.log(hundredsDigits);
+    let thousandsDigits = numDigits[3] == 1 ? romanStr.concat("M")
+                 : numDigits[3] == 2 ? romanStr.concat("MM")
+                 : numDigits[3] == 3 ? romanStr.concat("MMM")
+                 : romanStr;
+    console.log(thousandsDigits);
+    // Join back all the digits into one romanStr
+    romanStr = romanStr
+               .concat(thousandsDigits)
+               .concat(hundredsDigits)
+               .concat(tensDigits)
+               .concat(digits);
+    console.log(romanStr);
+    
+ return romanStr;
+}
+
+convertToRoman(36);
+convertToRoman(649);
+convertToRoman(3999);
+
+/*
+** Turn the num into digits, tens, hundreds, thousands
+** Figure out the num is in which range
+** 1 - I, 5 - V, 10 - X, 50 - L, 100 - C, 500 - D, 1000 - M
+** 
+*/

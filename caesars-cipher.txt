@@ -1,0 +1,23 @@
+function rot13(str) { // LBH QVQ VG!
+
+  let decodedStr = str.split('').map(e => e.match(/[A-Z]+/)
+                      ? e.charCodeAt(0) < 78
+                      ? String.fromCharCode(e.charCodeAt(0) + 13) 
+                      : String.fromCharCode(e.charCodeAt(0) - 13) 
+                      : e ).join('');
+  console.log(decodedStr);
+
+  return decodedStr;
+}
+
+// Change the inputs below to test
+rot13("SERR PBQR PNZC");
+rot13("LBH QVQ VG!");
+
+/*
+** Turn the str into arr of char
+** loop through the arr
+** check each charCodeAt(0) and shift it back 13  
+** A-Z => 65-90 (watch out for looping back)
+** and return the fromCharCode()
+*/

@@ -1,0 +1,20 @@
+function palindrome(str) {
+  // Good luck!
+  // Turn str into arr of char
+  let charArr = str.toLowerCase().split('').filter(e => e.match(/[^\W_]+/g));
+  // Reverse it (make a new copy)
+  let reverseArr = charArr.slice(0).reverse();
+  console.log(reverseArr);
+  console.log(charArr);
+  // Compare both arr's same index
+  let palindromeCheck = true;
+  for (let i = 0; i < charArr.length; i++) {
+    if (reverseArr[i] !== charArr[i]) {
+      palindromeCheck = false;
+    }
+  }
+  return palindromeCheck;
+}
+
+palindrome("eye");
+palindrome("not a palindrome");
