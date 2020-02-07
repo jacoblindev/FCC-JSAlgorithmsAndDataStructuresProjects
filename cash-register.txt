@@ -1,0 +1,87 @@
+function checkCashRegister(price, cash, cid) {
+  var change = Math.round(cash * 100 - price * 100);
+  console.log(change);
+  let unitArr = [["ONE HUNDRED", 100],
+                ["TWENTY", 20],
+                ["TEN", 10],
+                ["FIVE", 5],
+                ["ONE", 1],
+                ["QUARTER", 0.25],
+                ["DIME", 0.1],
+                ["NICKEL", 0.05],
+                ["PENNY", 0.01]];
+  // Use .map() to create new arr, so when we calculate * 100
+  // the orignal arr's value won't be effect...!
+  // if only use .slice() to copy, 
+  // somehow the value will be effected when we do Math with it...?
+  let checkCid = cid.map(e => e.slice(0)).reverse();
+  let checkUnit = unitArr.map(e => e.slice(0));
+
+  let obj = {
+    status: "INSUFFICIENT_FUNDS",
+    change: [["ONE HUNDRED", 0],
+            ["TWENTY", 0],
+            ["TEN", 0],
+            ["FIVE", 0],
+            ["ONE", 0],
+            ["QUARTER", 0],
+            ["DIME", 0],
+            ["NICKEL", 0],
+            ["PENNY", 0]]
+  };
+  for (let i = 0; i < checkCid.length; i++) {
+    checkCid[i][1] = Math.ceil(checkCid[i][1] * 100);
+    checkUnit[i][1] = Math.ceil(checkUnit[i][1] * 100);
+    // console.log(cid);
+    while (checkUnit[i][1] <= change && checkCid[i][1] >= checkUnit[i][1]) {
+      change -= checkUnit[i][1];
+      checkCid[i][1] -= checkUnit[i][1];
+      obj.change[i][1] += unitArr[i][1];
+    }
+  }
+  console.log(change);
+  // console.log(checkCid);
+  // console.log(cid);
+
+  if (change !== 0) {
+    obj.change = [];
+  } else if (checkCid.every(e => e[1] === 0)) {
+    obj.status = "CLOSED";
+    obj.change = cid;
+  } else {
+    obj.status = "OPEN";
+    obj.change = obj.change.filter(e => e[1] !== 0);
+  }
+  console.log(obj);
+  // Here is your change, ma'am.
+  return obj;
+}
+
+// Example cash-in-drawer array:
+// [["PENNY", 1.01],
+// ["NICKEL", 2.05],
+// ["DIME", 3.1],
+// ["QUARTER", 4.25],
+// ["ONE", 90],
+// ["FIVE", 55],
+// ["TEN", 20],
+// ["TWENTY", 60],
+// ["ONE HUNDRED", 100]]
+
+checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]]);
+checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+
+/*
+** First calculate the change = cash - price
+** Loop through the C-I-D and - the change
+** to see if it's
+** - "INSUFFICIENT_FUNDS" - Not enough!
+** - "CLOSED" - equal to the change, no more!
+** - "OPEN" - still got some left!
+** then set the "status" & "change" keys
+** return the obj
+** ============================================
+** Need to sorted out the decimal not calculate correctly isses?
+** Make num into integer by * 100
+*/
